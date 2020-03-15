@@ -1,0 +1,27 @@
+@charset "UTF-8";
+@import "rest";
+@import "xiangmude";
+@import "ani/index";
+@import "static/anim";
+
+.zhuye_li{
+  @include hp();
+  min-height: 500px;
+  >div{
+    width: 300px;
+    text-align: center;
+    >div{
+      display: inline-block;
+    }
+  }
+  img{
+    width: 100%;
+  }
+}
+.zhuye_page{
+  text-align: center;
+  padding: 20px;
+}
+.zhuye{
+  padding: 20px;
+}
