@@ -2,14 +2,15 @@
  * Created by zengtao on 2017/5/19.
  */
 import React, {Fragment, Component} from 'react';
-import {
-    Link
-} from 'react-router-dom';
+
 //本项目的模板页面
 
 
 export default class Index extends Component {
-    static defaultProps = {}
+
+    static defaultProps={
+
+    }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         // const {value} = nextProps;
@@ -26,26 +27,35 @@ export default class Index extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+
+        };
     }
 
+    componentDidMount = () => {
+
+    }
+
+
     //移除
-    componentWillUnmount() {
+    componentWillUnmount(){
         //离开页面消除所有接口请求
         //window.requestCancel();
     }
 
     render() {
-        const {} = this.props;
-        const {} = this.state;
+        const {locales} =this.props;
+        const {} =this.state;
+
         return (
-            <div className="not_found">
-                <div>
-                    <p><b>出错啦！</b></p>
-                    <p>您无权限访问此页面或访问的页面不存在</p>
-                    <div><Link to={"/"}>返回首页</Link></div>
+            <React.Fragment>
+                <div className="no_auth">
+                    <div>
+                        本账号无权限或登录已失效，请重新登录
+                    </div>
                 </div>
-            </div>
+            </React.Fragment>
         );
     }
 }
+

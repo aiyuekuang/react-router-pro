@@ -1,29 +1,20 @@
 import React, {Fragment, Component, PureComponent} from 'react';
 import Index from '@page/home';
-import history from '@components/public/history';
-import {qus} from 'esn';
+import {qus,createMap} from 'esn';
 
-let get_token = () => qus('token');
 
-export let url_data = [{
-    name: '首页',
-    url: "/",
-    comp: Index,
-    auth: false,
-    children: [
-        {
-            name: '首页',
-            url: '/neiye_1',
-            comp: null,
-            auth: false,
-            children: null
-        }, {
-            name: '首页',
-            url: '/neiye_2',
-            comp: null,
-            auth: false,
-            children: null
-        }
-    ]
-}
-];
+export const compEnum = createMap([{
+    alias: "home",
+    component: Index
+}],"alias")
+
+
+export let data = [{
+    name: "主页",
+    zh_CN: "主页",
+    en_US: "home",
+    path: "/",
+    isMenuShow: false,
+    component: Index,
+    icon: "HomeOutlined",
+}];

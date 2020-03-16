@@ -23,11 +23,9 @@ export default function Index(pro) {
         }
     },[count]);
 
-
-
     return (
         <div>
-
+            loading...
         </div>
     );
 }
