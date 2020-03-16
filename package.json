@@ -1,19 +1,17 @@
 {
   "name": "react-router-pro",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "react-router-pro",
-  "main": "./index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --color --open --mode development --inline   --profile --env.dev=development",
+    "lib": "npm run clean && babel src/components --out-dir lib",
     "build": "cross-env NODE_ENV=production webpack --progress --profile  --mode production --env.dev=production",
     "clean": "rd /s/q lib && mkdir lib",
-    "lib": "npm run clean && babel src --out-dir lib",
     "fabu": "npm publish"
   },
   "files": [
-    "dist",
-    "lib",
-    "index.js"
+    "lib"
   ],
   "repository": {
     "type": "git",

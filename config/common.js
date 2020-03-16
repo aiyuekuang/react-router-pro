@@ -48,8 +48,6 @@ export function is_pro(dev, env = '', pro = '') {
     }
 }
 
-//开发环境和正式环境的地址前缀
-export let url_add = is_pro('', "", '');
 
 //本地调试时的地址
 export let ip = getLocalIP();
@@ -61,7 +59,7 @@ export let dev_port = 3017
 export let localhost = is_pro(`http://${ip}:${dev_port}`, "", "")
 
 //发布后的网站title
-export let title = 'react_home'
+export let title = 'react-router-pro'
 
 //需要预加载的dns
 export let dns = ['www.baidu.com', 'www.qq.com']
