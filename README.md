@@ -2,7 +2,7 @@
 基于react-router的中国习惯版，聚合配置路由
 
 ## 文档
-[文档地址](https://www.yuque.com/docs/share/58326e91-e6e6-4a4a-a4eb-841dae2628e4?#)
+[文档地址](https://www.yuque.com/books/share/97de8b1c-5931-40fe-9bdb-c1f60ff95b6c?#)
 
 ## 用法
 
