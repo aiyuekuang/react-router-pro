@@ -1,6 +1,6 @@
 {
   "name": "react-router-pro",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "react-router-pro",
   "main": "./lib/index.js",
   "scripts": {
@@ -78,6 +78,6 @@
   "dependencies": {
     "react-router": "5.1.2",
     "react-router-dom": "^5.1.2",
-    "esn": "2.0.10"
+    "esn": "2.0.11"
   }
 }
