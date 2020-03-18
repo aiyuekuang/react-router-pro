@@ -26,7 +26,6 @@ let data = [{
     zh_CN: "主页",
     en_US: "home",
     path: "/",
-    isMenuShow: false,
     component: Index,
     icon: "HomeOutlined",
 }];
@@ -37,4 +36,21 @@ let data = [{
 
 ## 常见问题
 1. history.push为什么地址跳转了，但是页面不变？
-   - 答：可能history你引用的是原生的，history要使用react-router-pro的
+    - 答：可能history你引用的是原生的，history要使用react-router-pro的
+2.很多路由出现没权限的页面或者404,？
+    - 可能是/路由下配置了children，唯一特殊的就是根路由下不要配置子路由，需要的可以另起一个对象配置,如下：
+    ```jsx harmony
+    let data = [{
+        name: "主页",
+        zh_CN: "主页",
+        en_US: "home",
+        path: "/",
+        component: Index,
+        icon: "HomeOutlined",
+    },{ name: "其他",
+      zh_CN: "其他",
+      en_US: "other",
+      path: "/other",
+      component: Index,
+      icon: "HomeOutlined"}];
+    ```
