@@ -1,5 +1,5 @@
 # react-router-pro
-基于react-router的中国习惯版，聚合配置路由（赠人玫瑰手有余香，拥抱开源行动）
+基于react-router的中国习惯版，集中配置路由（赠人玫瑰手有余香，拥抱开源行动）
 
 ## 文档
 [文档地址](https://www.yuque.com/books/share/97de8b1c-5931-40fe-9bdb-c1f60ff95b6c?#)
