@@ -37,4 +37,4 @@ let data = [{
 
 ## 常见问题
 1. history.push为什么地址跳转了，但是页面不变？
-   - 答：你可能history用的是原生的或者react-router-dom自带的，history要使用react-router-pro的
+   - 答：可能history你引用的是原生的，history要使用react-router-pro的
