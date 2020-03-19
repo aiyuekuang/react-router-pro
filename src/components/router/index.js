@@ -97,7 +97,7 @@ export default function Index(pro) {
         >
             <Switch>
                 {list(warpRoute)}
-                <Route exact path="/none_auth" component={NoAuth}/>
+                <Route exact path="/noneAuth" component={NoAuth}/>
                 {isLogin ? HomeCompWarp : null}
             </Switch>
         </Router>
