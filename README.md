@@ -58,5 +58,5 @@ let data = [{
     ```
 3. 跳转到没权限和404的地址是什么？
     - 无权限：/noneAuth，404：/404
-4. react-router更新了性能提高了，我想用怎么办？
+4. react-router更新了，性能提高了，我想用怎么办？
     - react-router-pro会第一时间评估稳定性，升级react-router-pro。
