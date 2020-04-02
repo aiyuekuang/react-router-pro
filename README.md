@@ -36,6 +36,10 @@ let data = [{
 ## 业务无法实现？
 如果遇到react-router-pro无法实现的业务，请及时issue，您会得到最及时的帮助
 
+## 更新日志 v0.0.4 [地址](https://github.com/aiyuekuang/react-router-pro/blob/master/doc/doc.MD)
+1.组件调用props时的bug
+
+
 ## 常见问题
 1. history.push为什么地址跳转了，但是页面不变？
     - 答：可能history你引用的是原生的，history要使用react-router-pro的。
