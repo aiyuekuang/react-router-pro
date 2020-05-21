@@ -16,7 +16,11 @@ let prop = {
     isLogin: true,
     compEnum: [],
     HomeComp: null,
-    warpRoute:null
+    warpRoute:null,
+    isNoRouter:"isShow",
+    isRouterFun:(bool)=>{
+        return !bool;
+    }
 }
 
 export default function Index(pro) {
@@ -26,7 +30,7 @@ export default function Index(pro) {
         ...prop, ...pro
     }
 
-    const {data, NotFound, compEnum, NoAuth, isLogin, HomeComp,warpRoute} = props;
+    const {data, NotFound, compEnum, NoAuth, isLogin, HomeComp,warpRoute,isNoRouter,isRouterFun} = props;
 
 
     useEffect(() => {
@@ -41,13 +45,26 @@ export default function Index(pro) {
             return routes.map((route, index) => {
                 let Comp = () => (<span/>);
 
+                console.log(6666,route.component)
+
                 if (isString(route.component)) {
                     Comp = route.component ? compEnum.get(route.component).component : null
                 } else {
                     Comp = route.component
                 }
 
+
                 let bool = route.children && route.children.length > 0
+
+                let isExpend = true
+                if (bool) {
+                    isExpend = false
+                    for (let i of route.children) {
+                        if(isRouterFun(i[isNoRouter])){
+                            isExpend = true
+                        }
+                    }
+                }
 
                 return (
                     <Route
@@ -55,7 +72,7 @@ export default function Index(pro) {
                         path={parentPath + route.path}
                         exact={!bool}
                         render={(props) => { // 利用render 方法处理
-                            if (bool) {
+                            if (bool && isExpend) {
                                 return (
                                     <Switch>
                                         {list(route.children, parentPath + route.path)}

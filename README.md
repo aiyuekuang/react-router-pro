@@ -64,3 +64,7 @@ let data = [{
     - 无权限：/noneAuth，404：/404
 4. react-router更新了，性能提高了，我想用怎么办？
     - react-router-pro会第一时间评估稳定性，升级react-router-pro。
+    
+## 联系作者
+qq群号：873937696
+或者点击加群：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=24240bf5a60ae132316f6e5aa23448f73f2fa34dcd701490a163744105e004a2"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="react-router-pro" title="react-router-pro"></a>
