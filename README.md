@@ -67,4 +67,4 @@ let data = [{
     
 ## 联系作者
 qq群号：873937696
-或者点击加群：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=24240bf5a60ae132316f6e5aa23448f73f2fa34dcd701490a163744105e004a2"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="react-router-pro" title="react-router-pro"></a>
+或者点击加群：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=24240bf5a60ae132316f6e5aa23448f73f2fa34dcd701490a163744105e004a2">点击</a>
