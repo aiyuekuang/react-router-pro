@@ -8,7 +8,7 @@ import React, {Fragment, useEffect, useReducer, useState} from 'react';
 import history from '../public/history';
 import NotFounds from "../public/404"
 import NoAuths from "../public/no_auth"
-import {isString, treeSearchByArr, stringArrAddValue, arrDelNull, cloneop} from "esn";
+import {isString, stringArrAddValue, arrDelNull, cloneop, isArrayop} from "esn";
 
 let prop = {
   data: [],
@@ -25,6 +25,32 @@ let prop = {
 }
 let Comp = () => (<span/>);
 
+let treeSearchByArr = (tree, arr, label = 'id', children = 'children') => {
+  let obj = {};
+  let objLayer = [];
+  if (!tree) {
+    console.log('提示', '你传递的tree是空');
+  }
+  let tree_ = cloneop(tree);
+  if (!isArrayop(tree_)) {
+    tree_ = [tree_];
+  }
+  let loop = (tree_,layer = 0) => {
+
+    for (let i of tree_) {
+      if (i[label] === arr[layer]) {
+        objLayer.push(i)
+        if (arr[layer + 1] && i[children] && i[children].length >0) {
+          loop(i[children],layer + 1);
+        } else if(layer === (arr.length - 1)){
+          obj = i;
+        }
+      }
+    }
+  };
+  loop(tree_);
+  return {obj,objLayer};
+};
 
 // 是否为当前路由
 let isCurrentRoute = (path, currentPath) => {
@@ -70,8 +96,10 @@ export default function Index(pro) {
     }
     // let urlArr = stringArrAddValue(arrDelNull(_state[_state.length - 1].split("/")))
     let urlArr = _state.map((data, i) => {
-      let obj = treeSearchByArr(props.data,stringArrAddValue(arrDelNull(data.split("/"))),"path")
+      let _obj = treeSearchByArr(props.data,stringArrAddValue(arrDelNull(data.split("/"))),"path")
+      let obj = {..._obj.obj};
       obj.url = data;
+      obj.layer = _obj.objLayer;
       return obj
     })
     setRouterActDataObj(urlArr)
