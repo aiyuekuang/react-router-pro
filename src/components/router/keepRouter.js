@@ -2,13 +2,13 @@ import {
   Router,
   Route,
   Switch,
-
 } from 'react-router-dom';
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useReducer, useState} from 'react';
 import history from '../public/history';
 import NotFounds from "../public/404"
 import NoAuths from "../public/no_auth"
 import {isString} from "esn";
+import Home from "./home"
 
 let prop = {
   data: [],
@@ -21,6 +21,11 @@ let prop = {
   isNoRouter: "isShow",
   isRouterFun: (bool) => {
     return !bool;
+  },
+  onChange:()=>{},
+  //用于生成路由时，判断数据是不是路由数据
+  isRouter:(data)=>{
+
   }
 }
 let Comp = () => (<span/>);
@@ -43,7 +48,6 @@ export default function Index(pro) {
     return () => {
     }
   }, []);
-
 
   let list = (routes, parentPath = "") => {
     if (routes) {
@@ -94,29 +98,14 @@ export default function Index(pro) {
     }
   }
 
-  let HomeCompWarp = (<Switch>
-    {list(data)}
-    <Route render={() => <NotFound/>}/>
-  </Switch>);
-
-  if (HomeComp) {
-    HomeCompWarp = (<HomeComp>
-      <Switch>
-        {list(data)}
-        <Route render={() => <NotFound/>}/>
-      </Switch>
-    </HomeComp>)
-  }
 
   return (
     <Router
       history={history}
     >
-      <Switch>
-        {list(warpRoute)}
-        <Route exact path="/noneAuth" component={NoAuth}/>
-        {isLogin ? HomeCompWarp : null}
-      </Switch>
+        {/*{list(warpRoute)}*/}
+        {isLogin ? <Route component={()=><Home {...props} />}/> : null}
+        {/*<Route exact path="/noneAuth" component={NoAuth}/>*/}
     </Router>
   );
 }

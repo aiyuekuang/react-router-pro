@@ -1,14 +1,16 @@
 {
   "name": "react-router-pro",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "description": "react-router-pro",
   "main": "./lib/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --color --open --mode development --inline   --profile --env.dev=development",
-    "lib": "npm run clean && babel src/components --out-dir lib",
+    "lib": "npm run clean && babel src/components --out-dir lib && npm run copy",
     "build": "cross-env NODE_ENV=production webpack --progress --profile  --mode production --env.dev=production",
     "clean": "rd /s/q lib && mkdir lib",
-    "fabu": "npm publish"
+    "fabu": "npm version patch && npm publish",
+    "copy": "start D:\\ku/anup/bin/tihuan.bat"
+
   },
   "files": [
     "lib"
@@ -78,6 +80,6 @@
   "dependencies": {
     "react-router": "5.1.2",
     "react-router-dom": "^5.1.2",
-    "esn": "2.0.11"
+    "esn": "2.0.20"
   }
 }
