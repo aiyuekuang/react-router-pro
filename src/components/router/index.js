@@ -23,9 +23,6 @@ let prop = {
     return !bool;
   }
 }
-let Comp = () => (<span/>);
-
-
 
 export default function Index(pro) {
   // Declare a new state variable, which we'll call "count"
@@ -48,6 +45,8 @@ export default function Index(pro) {
   let list = (routes, parentPath = "") => {
     if (routes) {
       return routes.map((route, index) => {
+        let Comp = () => (<span/>);
+
         if (isString(route.component)) {
           Comp = route.component && compEnum.get(route.component) ? compEnum.get(route.component).component : () => (
             <span/>)
