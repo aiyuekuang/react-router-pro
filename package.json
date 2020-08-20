@@ -1,6 +1,6 @@
 {
   "name": "react-router-pro",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "react-router-pro",
   "main": "./lib/index.js",
   "scripts": {
@@ -10,7 +10,6 @@
     "clean": "rd /s/q lib && mkdir lib",
     "fabu": "npm version patch && npm publish",
     "copy": "start D:\\ku/anup/bin/tihuan.bat"
-
   },
   "files": [
     "lib"
