@@ -1,14 +1,8 @@
-import {
-  Router,
-  Route,
-  Switch,
-  useLocation
-} from 'react-router-dom';
+import {Route, useLocation} from 'react-router-dom';
 import React, {Fragment, useEffect, useReducer, useState} from 'react';
-import history from '../public/history';
 import NotFounds from "../public/404"
 import NoAuths from "../public/no_auth"
-import {isString, stringArrAddValue, arrDelNull, cloneop, isArrayop} from "esn";
+import {arrDelNull, cloneop, isArrayop, stringArrAddValue} from "esn";
 
 let prop = {
   data: [],
@@ -23,7 +17,6 @@ let prop = {
     return !bool;
   }
 }
-let Comp = () => (<span/>);
 
 let treeSearchByArr = (tree, arr, label = 'id', children = 'children') => {
   let obj = {};
@@ -35,28 +28,34 @@ let treeSearchByArr = (tree, arr, label = 'id', children = 'children') => {
   if (!isArrayop(tree_)) {
     tree_ = [tree_];
   }
-  let loop = (tree_,layer = 0) => {
+  let loop = (tree_, layer = 0) => {
 
     for (let i of tree_) {
       if (i[label] === arr[layer]) {
         objLayer.push(i)
-        if (arr[layer + 1] && i[children] && i[children].length >0) {
-          loop(i[children],layer + 1);
-        } else if(layer === (arr.length - 1)){
+        if (arr[layer + 1] && i[children] && i[children].length > 0) {
+          loop(i[children], layer + 1);
+        } else if (layer === (arr.length - 1)) {
           obj = i;
         }
       }
     }
   };
   loop(tree_);
-  return {obj,objLayer};
+  return {obj, objLayer};
 };
 
 // 是否为当前路由
 let isCurrentRoute = (path, currentPath) => {
   let isRoute = false;
-  if (path.includes('/:id')) {
-    if (currentPath.includes(path.split(':id')[0])) {
+  if (path.includes('/:')) {
+    let ee = stringArrAddValue(arrDelNull(currentPath.split("/")))
+    ee.pop()
+    let _currentPath = ee.reduce((data, next) => {
+      return data + next
+    })
+
+    if (_currentPath === path.split('/:')[0]) {
       isRoute = true;
     }
   } else {
@@ -76,8 +75,8 @@ export default function Index(pro) {
   }
   let location = useLocation();
 
-  const {data, NotFound, compEnum, NoAuth, isLogin, HomeComp, warpRoute, isNoRouter, isRouterFun, onChange,isRouter} = props;
-  const [routerActDataObj,setRouterActDataObj] = useState([])
+  const {data, NotFound, compEnum, NoAuth, isLogin, HomeComp, warpRoute, isNoRouter, isRouterFun, onChange, isRouter} = props;
+  const [routerActDataObj, setRouterActDataObj] = useState([])
 
   const [routerActData, dispatch] = useReducer((state, action) => {
     let _state = [...state];
@@ -96,7 +95,7 @@ export default function Index(pro) {
     }
     // let urlArr = stringArrAddValue(arrDelNull(_state[_state.length - 1].split("/")))
     let urlArr = _state.map((data, i) => {
-      let _obj = treeSearchByArr(props.data,stringArrAddValue(arrDelNull(data.split("/"))),"path")
+      let _obj = treeSearchByArr(props.data, stringArrAddValue(arrDelNull(data.split("/"))), "path")
       let obj = {..._obj.obj};
       obj.url = data;
       obj.layer = _obj.objLayer;
@@ -123,13 +122,13 @@ export default function Index(pro) {
   //   }
   // }, []);
 
-  let filterData = (arr)=>{
-    if(arr && arr.length>0){
+  let filterData = (arr) => {
+    if (arr && arr.length > 0) {
       let _arr = cloneop(arr);
-      return _arr.filter((data,i)=>{
+      return _arr.filter((data, i) => {
         return isRouter(data);
       })
-    }else {
+    } else {
       return []
     }
   }
@@ -143,7 +142,12 @@ export default function Index(pro) {
       if (!isRoute && _children && _children.length > 0) {
         return renderRouter(data.children, `${parentPath}${data.path}`);
       }
+
       if (routerActData.includes(`${parentPath}${data.path}`) || isRoute) {
+
+        let Comp = data.component && typeof data.component === 'string'
+          ? compEnum.get(data.component).component : data.component
+
         return (
           <div
             key={i}
@@ -152,20 +156,12 @@ export default function Index(pro) {
               height: '100%',
             }}
           >
-            <Route
-              key={i}
-              // path={'/'}
-              component={
-                data.component && typeof data.component === 'string'
-                  ? compEnum.get(data.component).component : data.component
-              }
-            />
+            <Comp routerDispatch={dispatch} routerActData={routerActDataObj}/>
           </div>
         );
       }
     });
   };
-
 
 
   let HomeCompWarp = (
@@ -177,7 +173,7 @@ export default function Index(pro) {
 
   if (HomeComp) {
     HomeCompWarp = (
-      <HomeComp dispatch={dispatch} routerActData={routerActDataObj}>
+      <HomeComp routerDispatch={dispatch} routerActData={routerActDataObj}>
         {renderRouter(data)}
         {/*<Route render={() => <NotFound/>}/>*/}
       </HomeComp>
