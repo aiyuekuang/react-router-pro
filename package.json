@@ -8,8 +8,10 @@
     "lib": "npm run clean && babel src/components --out-dir lib && npm run copy",
     "build": "cross-env NODE_ENV=production webpack --progress --profile  --mode production --env.dev=production",
     "clean": "rd /s/q lib && mkdir lib",
-    "fabu": "npm version patch && npm publish",
-    "copy": "start D:\\ku/anup/bin/tihuan.bat"
+    "fabu": "npm run npm && npm run git && npm version patch && npm publish",
+    "npm": "npm set registry https://registry.npmjs.org",
+    "copy": "start D:\\ku/anup/bin/tihuan.bat",
+    "git": "python ./bin/release.py"
   },
   "files": [
     "lib"

@@ -1,4 +1,4 @@
-import {Route, useLocation} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import React, {Fragment, useEffect, useReducer, useState} from 'react';
 import NotFounds from "../public/404"
 import NoAuths from "../public/no_auth"
@@ -51,9 +51,9 @@ let isCurrentRoute = (path, currentPath) => {
   if (path.includes('/:')) {
     let ee = stringArrAddValue(arrDelNull(currentPath.split("/")))
     ee.pop()
-    let _currentPath = ee.reduce((data, next) => {
+    let _currentPath = ee.length ? ee.reduce((data, next) => {
       return data + next
-    })
+    }) : ""
 
     if (_currentPath === path.split('/:')[0]) {
       isRoute = true;
