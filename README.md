@@ -15,33 +15,35 @@ npm i react-router-pro
 ```jsx harmony
 import {RouterPro} from "react-router-pro"
 
-const compEnum = createMap([{
-    alias: "home",
-    component: Index
-}],"alias")
-
-
 let data = [{
     name: "主页",
-    zh_CN: "主页",
-    en_US: "home",
     path: "/",
     component: Index,
-    icon: "HomeOutlined",
-}];
+   //注意：在/路由下不要出现children
+	},{
+        name: "内页",
+        path: "/page",
+        component: Index,
+     	children:[{
+            name: "子内页",
+            path: "/pageIn",
+            component: Index,
+		}]
+	}];
 
-<RouterPro data={data} compEnum={compEnum}/>
+<RouterPro data={data}/>
 
 ```
 ## 业务无法实现？
 如果遇到react-router-pro无法实现的业务，请及时issue，您会得到最及时的帮助
 
-## 更新日志 v0.0.4 [地址](https://github.com/aiyuekuang/react-router-pro/blob/master/doc/doc.MD)
-1.组件调用props时的bug
+## 更新日志 v0.0.12 [地址](https://github.com/aiyuekuang/react-router-pro/blob/master/doc/doc.MD)
+1. 发布KeepRouter-缓存路由系统
 
 
 ## 常见问题
 1. history.push为什么地址跳转了，但是页面不变？
+    
     - 答：可能history你引用的是原生的，history要使用react-router-pro的。
 2. 很多路由出现没权限的页面或者404？
     - 可能是/路由下配置了children，唯一特殊的就是根路由下不要配置子路由，需要的可以另起一个对象配置,如下：
@@ -61,9 +63,10 @@ let data = [{
       icon: "HomeOutlined"}];
     ```
 3. 跳转到没权限和404的地址是什么？
+    
     - 无权限：/noneAuth，404：/404
 4. react-router更新了，性能提高了，我想用怎么办？
-    - react-router-pro会第一时间评估稳定性，升级react-router-pro。
+    - react-router-pro会跟随react-router同步更新
     
 ## 联系作者
 qq群号：873937696

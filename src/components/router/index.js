@@ -1,10 +1,5 @@
-import {
-  Router,
-  Route,
-  Switch,
-
-} from 'react-router-dom';
-import React, {Fragment, useEffect, useState} from 'react';
+import {Route, Router, Switch,} from 'react-router-dom';
+import React, {useEffect} from 'react';
 import history from '../public/history';
 import NotFounds from "../public/404"
 import NoAuths from "../public/no_auth"
@@ -99,12 +94,14 @@ export default function Index(pro) {
   </Switch>);
 
   if (HomeComp) {
-    HomeCompWarp = (<HomeComp>
-      <Switch>
-        {list(data)}
-        <Route render={() => <NotFound/>}/>
-      </Switch>
-    </HomeComp>)
+    HomeCompWarp = (
+      <HomeComp>
+        <Switch>
+          {list(data)}
+          <Route render={() => <NotFound/>}/>
+        </Switch>
+      </HomeComp>
+    )
   }
 
   return (
