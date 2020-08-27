@@ -29,9 +29,8 @@ let treeSearchByArr = (tree, arr, label = 'id', children = 'children') => {
     tree_ = [tree_];
   }
   let loop = (tree_, layer = 0) => {
-
     for (let i of tree_) {
-      if (i[label] === arr[layer]) {
+      if (i[label] === arr[layer] || i[label].includes('/:')) {
         objLayer.push(i)
         if (arr[layer + 1] && i[children] && i[children].length > 0) {
           loop(i[children], layer + 1);
@@ -96,6 +95,7 @@ export default function Index(pro) {
     // let urlArr = stringArrAddValue(arrDelNull(_state[_state.length - 1].split("/")))
     let urlArr = _state.map((data, i) => {
       let _obj = treeSearchByArr(props.data, stringArrAddValue(arrDelNull(data.split("/"))), "path")
+
       let obj = {..._obj.obj};
       obj.url = data;
       obj.layer = _obj.objLayer;
@@ -112,6 +112,8 @@ export default function Index(pro) {
     return () => {
     }
   }, [location]);
+
+
 
   // useEffect(() => {
   //   // Update the document title using the browser API
@@ -156,13 +158,12 @@ export default function Index(pro) {
               height: '100%',
             }}
           >
-            <Comp routerDispatch={dispatch} routerActData={routerActDataObj}/>
+            <Comp routerAddDispatch={(data)=>dispatch({data: data, type: "ADD" })} routerMinusDispatch={(data)=>dispatch({data: data, type: "MINUS" })} routerActData={routerActDataObj}/>
           </div>
         );
       }
     });
   };
-
 
   let HomeCompWarp = (
     <Fragment>
@@ -173,7 +174,7 @@ export default function Index(pro) {
 
   if (HomeComp) {
     HomeCompWarp = (
-      <HomeComp routerDispatch={dispatch} routerActData={routerActDataObj}>
+      <HomeComp routerAddDispatch={(data)=>dispatch({data, type: "ADD" })} routerMinusDispatch={(data)=>dispatch({data, type: "MINUS" })} routerActData={routerActDataObj}>
         {renderRouter(data)}
         {/*<Route render={() => <NotFound/>}/>*/}
       </HomeComp>
