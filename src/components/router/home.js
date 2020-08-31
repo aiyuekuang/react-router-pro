@@ -3,6 +3,7 @@ import React, {Fragment, useEffect, useReducer, useState} from 'react';
 import NotFounds from "../public/404"
 import NoAuths from "../public/no_auth"
 import {arrDelNull, cloneop, isArrayop, stringArrAddValue} from "esn";
+import history from "../public/history"
 
 let prop = {
   data: [],
@@ -158,7 +159,7 @@ export default function Index(pro) {
               height: '100%',
             }}
           >
-            <Comp routerAddDispatch={(data)=>dispatch({data: data, type: "ADD" })} routerMinusDispatch={(data)=>dispatch({data: data, type: "MINUS" })} routerActData={routerActDataObj}/>
+            <Comp location={location} routerAddDispatch={(data)=>dispatch({data: data, type: "ADD" })} routerMinusDispatch={(data)=>dispatch({data: data, type: "MINUS" })} routerActData={routerActDataObj}/>
           </div>
         );
       }
