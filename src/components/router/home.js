@@ -2,8 +2,7 @@ import {useLocation} from 'react-router-dom';
 import React, {Fragment, useEffect, useReducer, useState} from 'react';
 import NotFounds from "../public/404"
 import NoAuths from "../public/no_auth"
-import {arrDelNull, cloneop, isArrayop, stringArrAddValue} from "esn";
-import history from "../public/history"
+import {arrDelNull, cloneop, diffObj, isArrayop, stringArrAddValue} from "esn";
 
 let prop = {
   data: [],
@@ -19,7 +18,7 @@ let prop = {
   }
 }
 
-let treeSearchByArr = (tree, arr, label = 'id', children = 'children') => {
+export let treeSearchByArr = (tree, arr, label = 'id', children = 'children') => {
   let obj = {};
   let objLayer = [];
   if (!tree) {
@@ -46,12 +45,12 @@ let treeSearchByArr = (tree, arr, label = 'id', children = 'children') => {
 };
 
 // 是否为当前路由
-let isCurrentRoute = (path, currentPath) => {
+export let isCurrentRoute = (path, currentPath) => {
   let isRoute = false;
   if (path.includes('/:')) {
-    let ee = stringArrAddValue(arrDelNull(currentPath.split("/")))
-    ee.pop()
-    let _currentPath = ee.length ? ee.reduce((data, next) => {
+    let currentPathUrlArr = stringArrAddValue(arrDelNull(currentPath.split("/")))
+    currentPathUrlArr.pop()
+    let _currentPath = currentPathUrlArr.length ? currentPathUrlArr.reduce((data, next) => {
       return data + next
     }) : ""
 
@@ -65,7 +64,6 @@ let isCurrentRoute = (path, currentPath) => {
   }
   return isRoute;
 };
-
 
 export default function Index(pro) {
   // Declare a new state variable, which we'll call "count"
@@ -91,39 +89,60 @@ export default function Index(pro) {
         break;
       case "MINUS":
         _state.splice(_state.findIndex(item => item === action.data), 1);
+
+
         break;
     }
-    // let urlArr = stringArrAddValue(arrDelNull(_state[_state.length - 1].split("/")))
-    let urlArr = _state.map((data, i) => {
-      let _obj = treeSearchByArr(props.data, stringArrAddValue(arrDelNull(data.split("/"))), "path")
 
-      let obj = {..._obj.obj};
-      obj.url = data;
-      obj.layer = _obj.objLayer;
-      return obj
-    })
-    setRouterActDataObj(urlArr)
-    // onChange(_state, urlArr)
-    return _state
+    if (diffObj(state, _state)) {
+      let urlArr = _state.map((data, i) => {
+        let _obj = treeSearchByArr(props.data, stringArrAddValue(arrDelNull(data.split("/"))), "path")
+
+        let obj = {..._obj.obj};
+        obj.url = data;
+        obj.layer = _obj.objLayer;
+        return obj
+      })
+      setRouterActDataObj(urlArr)
+      return _state
+    }
+
+    return state
   }, ["/"]);
+
 
   useEffect(() => {
     // Update the document title using the browser API
+    console.log(565656, location.pathname)
+
+    return () => {
+    }
+  }, []);
+  useEffect(() => {
+    // Update the document title using the browser API
+    console.log(1111111, location.pathname)
     dispatch({data: location.pathname, type: "ADD"})
+
     return () => {
     }
   }, [location]);
 
+  useEffect(() => {
+    // Update the document title using the browser API
 
+    console.log(5555)
+    return () => {
+    }
+  }, [routerActDataObj]);
 
-  // useEffect(() => {
-  //   // Update the document title using the browser API
-  //   history.listen((data, type) => {
-  //     dispatch({data: location.pathname})
-  //   })
-  //   return () => {
-  //   }
-  // }, []);
+  useEffect(() => {
+    // Update the document title using the browser API
+
+    console.log(666)
+    return () => {
+    }
+  }, [routerActData]);
+
 
   let filterData = (arr) => {
     if (arr && arr.length > 0) {
@@ -137,46 +156,69 @@ export default function Index(pro) {
   }
 
 
-  let renderRouter = (router, parentPath = '') => {
-    return router.map((data, i) => {
-      let isRoute = isCurrentRoute(`${parentPath}${data.path}`, location.pathname);
-      let _children = filterData(data.children);
+  let loopRouter = (router, parentPath = '', path = "") => {
 
-      if (!isRoute && _children && _children.length > 0) {
-        return renderRouter(data.children, `${parentPath}${data.path}`);
+    console.log(7777)
+
+    return router.map((data, i) => {
+      let _children = filterData(data.children);
+      if (_children && _children.length > 0) {
+        return loopRouter(data.children, `${parentPath}${data.path}`, path);
       }
 
-      if (routerActData.includes(`${parentPath}${data.path}`) || isRoute) {
+      let isRoute = isCurrentRoute(`${parentPath}${data.path}`, path);
 
+      if (isRoute) {
         let Comp = data.component && typeof data.component === 'string'
           ? compEnum.get(data.component).component : data.component
 
         return (
           <div
-            key={i}
+            key={path}
             style={{
-              display: isRoute ? 'block' : 'none',
+              display: isCurrentRoute(path, location.pathname) ? 'block' : 'none',
               height: '100%',
             }}
           >
-            <Comp location={location} routerAddDispatch={(data)=>dispatch({data: data, type: "ADD" })} routerMinusDispatch={(data)=>dispatch({data: data, type: "MINUS" })} routerActData={routerActDataObj}/>
+            <Comp
+              location={location}
+              routerAddDispatch={(data) => dispatch({data: data, type: "ADD"})}
+              routerMinusDispatch={(data) => dispatch({data: data, type: "MINUS"})}
+              routerActData={routerActDataObj}
+            />
           </div>
         );
       }
     });
   };
 
+
+  console.log(222222, routerActData)
+  let renderRouterDom = (actData, routeData) => {
+    return actData.map((value, i) => {
+      return (
+        <Fragment
+          key={i}
+        >
+          {loopRouter(routeData, "", value)}
+        </Fragment>
+      )
+    })
+  }
+
+
   let HomeCompWarp = (
     <Fragment>
-      {renderRouter(data)}
+      {renderRouterDom(routerActData, data)}
       {/*<Route render={() => <NotFound/>}/>*/}
     </Fragment>
   );
 
   if (HomeComp) {
     HomeCompWarp = (
-      <HomeComp routerAddDispatch={(data)=>dispatch({data, type: "ADD" })} routerMinusDispatch={(data)=>dispatch({data, type: "MINUS" })} routerActData={routerActDataObj}>
-        {renderRouter(data)}
+      <HomeComp routerAddDispatch={(data) => dispatch({data, type: "ADD"})}
+                routerMinusDispatch={(data) => dispatch({data, type: "MINUS"})} routerActData={routerActDataObj}>
+        {renderRouterDom(routerActData, data)}
         {/*<Route render={() => <NotFound/>}/>*/}
       </HomeComp>
     )
