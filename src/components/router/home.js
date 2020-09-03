@@ -158,8 +158,6 @@ export default function Index(pro) {
 
   let loopRouter = (router, parentPath = '', path = "") => {
 
-    console.log(7777)
-
     return router.map((data, i) => {
       let _children = filterData(data.children);
       if (_children && _children.length > 0) {
