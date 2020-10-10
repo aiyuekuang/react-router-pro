@@ -103,9 +103,11 @@ export default function Index(pro) {
     <Router
       history={history}
     >
-        {/*{list(warpRoute)}*/}
+      <Switch>
+        {list(warpRoute)}
         {isLogin ? <Route component={()=><Home {...props} />}/> : null}
         {/*<Route exact path="/noneAuth" component={NoAuth}/>*/}
+      </Switch>
     </Router>
   );
 }
