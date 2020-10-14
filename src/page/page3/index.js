@@ -19,8 +19,8 @@ export default function Index() {
 
     return (
         <div>
-            <Link to="/disan">去第三页</Link>
-            <p>第二页</p>
+            <Link to="/dier">去第二页</Link>
+            <p>第三页</p>
         </div>
     );
 }

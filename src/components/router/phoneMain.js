@@ -3,6 +3,9 @@ import React, {Fragment, useEffect, useReducer, useState} from 'react';
 import NotFounds from "../public/404"
 import NoAuths from "../public/no_auth"
 import {arrDelNull, cloneop, diffObj, isArrayop, stringArrAddValue} from "esn";
+import history from '../public/history';
+
+
 
 let prop = {
   data: [],
@@ -15,7 +18,8 @@ let prop = {
   isNoRouter: "isShow",
   isRouterFun: (bool) => {
     return !bool;
-  }
+  },
+
 }
 
 export let treeSearchByArr = (tree, arr, label = 'id', children = 'children') => {
@@ -88,9 +92,7 @@ export default function Index(pro) {
         }
         break;
       case "MINUS":
-        _state.splice(_state.findIndex(item => item === action.data), 1);
-
-
+        _state.splice((_state.findIndex(item => item === action.data)) + 1, 1);
         break;
     }
 
@@ -119,8 +121,12 @@ export default function Index(pro) {
   }, []);
   useEffect(() => {
     // Update the document title using the browser API
-    dispatch({data: location.pathname, type: "ADD"})
 
+    if(history.action === "POP" && routerActData.length > 1){
+      dispatch({data: location.pathname, type: "MINUS"})
+    }else {
+      dispatch({data: location.pathname, type: "ADD"})
+    }
     return () => {
     }
   }, [location]);
@@ -216,6 +222,7 @@ export default function Index(pro) {
       </HomeComp>
     )
   }
+
 
   return (
     <Fragment>

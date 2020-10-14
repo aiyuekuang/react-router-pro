@@ -95,7 +95,6 @@ export default class Index extends Component {
     const {data, NotFound, compEnum, NoAuth, isLogin, HomeComp, warpRoute, isNoRouter, isRouterFun, onChange, isRouter} = this.props;
     const {routerActDataObj, routerActData} = this.state;
 
-    console.log(2222, routerActData, routerActDataObj)
 
     let filterData = (arr) => {
       if (arr && arr.length > 0) {
