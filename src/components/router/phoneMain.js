@@ -16,7 +16,7 @@ let prop = {
   HomeComp: null,
   warpRoute: null,
   isNoRouter: "isShow",
-  isRouterFun: (bool) => {
+  isRouterFun: (bool = false) => {
     return !bool;
   },
 
