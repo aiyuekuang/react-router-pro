@@ -1,5 +1,5 @@
 # react-router-pro
-基于react-router的中国习惯版，集中配置路由（赠人玫瑰手有余香，辛苦码字，留个星呗）
+基于react-router的中国习惯版，包含：集中配置路由、缓存路由、移动端路由，路由之间可无缝切换，极简配置。（赠人玫瑰手有余香，辛苦码字，留个星呗）
 
 ## 文档
 [文档地址](https://www.yuque.com/books/share/97de8b1c-5931-40fe-9bdb-c1f60ff95b6c?#)
@@ -37,8 +37,8 @@ let data = [{
 ## 业务无法实现？
 如果遇到react-router-pro无法实现的业务，请及时issue，您会得到最及时的帮助
 
-## 更新日志 v0.0.12 [地址](https://github.com/aiyuekuang/react-router-pro/blob/master/doc/doc.MD)
-1. 发布KeepRouter-缓存路由系统
+## 更新日志 v0.0.19 [地址](https://github.com/aiyuekuang/react-router-pro/blob/master/doc/doc.MD)
+1. 发布PhoneRouter-手机端路由系统
 
 
 ## 常见问题
