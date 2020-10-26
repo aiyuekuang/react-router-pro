@@ -34,7 +34,7 @@ export let treeSearchByArr = (tree, arr, label = 'id', children = 'children') =>
   }
   let loop = (tree_, layer = 0) => {
     for (let i of tree_) {
-      if (i[label] === arr[layer] || i[label].includes('/:')) {
+      if (i[label] && (i[label] === arr[layer] || i[label].includes('/:'))) {
         objLayer.push(i)
         if (arr[layer + 1] && i[children] && i[children].length > 0) {
           loop(i[children], layer + 1);
