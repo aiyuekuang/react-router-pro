@@ -106,6 +106,7 @@ export default function Index(pro) {
       <Switch>
         {list(warpRoute)}
         {isLogin ? <Route component={()=><Home {...props} />}/> : null}
+        {isLogin ?<Route exact={true} render={() => <NotFound/>}/>:null}
         {/*<Route exact path="/noneAuth" component={NoAuth}/>*/}
       </Switch>
     </Router>
