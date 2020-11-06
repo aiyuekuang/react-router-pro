@@ -1,4 +1,4 @@
-import {useLocation} from 'react-router-dom';
+import {useLocation,Route} from 'react-router-dom';
 import React, {Fragment, useEffect, useReducer, useState} from 'react';
 import NotFounds from "../public/404"
 import NoAuths from "../public/no_auth"
@@ -212,7 +212,7 @@ export default function Index(pro) {
       <HomeComp routerAddDispatch={(data) => dispatch({data, type: "ADD"})}
                 routerMinusDispatch={(data) => dispatch({data, type: "MINUS"})} routerActData={routerActDataObj}>
         {renderRouterDom(routerActData, data)}
-        {/*<Route render={() => <NotFound/>}/>*/}
+        <Route render={() => <NotFound/>}/>
       </HomeComp>
     )
   }
