@@ -30,6 +30,10 @@ export let treeSearchByArr = (tree, arr, label = 'id', children = 'children') =>
   }
   let loop = (tree_, layer = 0) => {
     for (let i of tree_) {
+      // let str = i[label];
+      // if(i[label].indexOf("?") !== -1){
+      //   str = str.substring(0,i[label].indexOf("?"))
+      // }
       if (i[label] === arr[layer] || i[label].includes('/:')) {
         objLayer.push(i)
         if (arr[layer + 1] && i[children] && i[children].length > 0) {
@@ -54,10 +58,12 @@ export let isCurrentRoute = (path, currentPath) => {
       return data + next
     }) : ""
 
+
     if (_currentPath === path.split('/:')[0]) {
       isRoute = true;
     }
   } else {
+
     if (currentPath === path) {
       isRoute = true;
     }
@@ -89,8 +95,6 @@ export default function Index(pro) {
         break;
       case "MINUS":
         _state.splice(_state.findIndex(item => item === action.data), 1);
-
-
         break;
     }
 

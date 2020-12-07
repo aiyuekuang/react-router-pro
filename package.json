@@ -5,12 +5,13 @@
   "main": "./lib/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --color --open --mode development --inline   --profile --env.dev=development",
-    "lib": "npm run clean && babel src/components --out-dir lib",
+    "lib": "npm run clean && babel src/components --out-dir lib && npm run copy",
     "build": "cross-env NODE_ENV=production webpack --progress --profile  --mode production --env.dev=production",
     "clean": "rd /s/q lib && mkdir lib",
     "fabu": "npm run npm && npm run git && npm version patch && npm publish",
     "npm": "npm set registry https://registry.npmjs.org",
-    "git": "python ./bin/release.py"
+    "git": "python ./bin/release.py",
+    "copy": "python ./bin/copy.py"
   },
   "files": [
     "lib"

@@ -4,7 +4,7 @@ import NotFounds from "../public/404"
 import NoAuths from "../public/no_auth"
 import {arrDelNull, cloneop, diffObj, isArrayop, stringArrAddValue} from "esn";
 import history from '../public/history';
-
+import {treeSearchByArr} from "./home";
 
 
 let prop = {
@@ -19,34 +19,36 @@ let prop = {
   isRouterFun: (bool = false) => {
     return !bool;
   },
+  onChange:()=>{
 
+  }
 }
 
-export let treeSearchByArr = (tree, arr, label = 'id', children = 'children') => {
-  let obj = {};
-  let objLayer = [];
-  if (!tree) {
-    console.log('提示', '你传递的tree是空');
-  }
-  let tree_ = cloneop(tree);
-  if (!isArrayop(tree_)) {
-    tree_ = [tree_];
-  }
-  let loop = (tree_, layer = 0) => {
-    for (let i of tree_) {
-      if (i[label] && (i[label] === arr[layer] || i[label].includes('/:'))) {
-        objLayer.push(i)
-        if (arr[layer + 1] && i[children] && i[children].length > 0) {
-          loop(i[children], layer + 1);
-        } else if (layer === (arr.length - 1)) {
-          obj = i;
-        }
-      }
-    }
-  };
-  loop(tree_);
-  return {obj, objLayer};
-};
+// export let treeSearchByArr = (tree, arr, label = 'id', children = 'children') => {
+//   let obj = {};
+//   let objLayer = [];
+//   if (!tree) {
+//     console.log('提示', '你传递的tree是空');
+//   }
+//   let tree_ = cloneop(tree);
+//   if (!isArrayop(tree_)) {
+//     tree_ = [tree_];
+//   }
+//   let loop = (tree_, layer = 0) => {
+//     for (let i of tree_) {
+//       if (i[label] && (i[label] === arr[layer] || i[label].includes('/:'))) {
+//         objLayer.push(i)
+//         if (arr[layer + 1] && i[children] && i[children].length > 0) {
+//           loop(i[children], layer + 1);
+//         } else if (layer === (arr.length - 1)) {
+//           obj = i;
+//         }
+//       }
+//     }
+//   };
+//   loop(tree_);
+//   return {obj, objLayer};
+// };
 
 // 是否为当前路由
 export let isCurrentRoute = (path, currentPath) => {
@@ -68,6 +70,23 @@ export let isCurrentRoute = (path, currentPath) => {
   }
   return isRoute;
 };
+
+
+let setRouterActDataObjFun=(_state,routerData)=>{
+  if(routerData){
+   return _state.map((data, i) => {
+      let _obj = treeSearchByArr(routerData, stringArrAddValue(arrDelNull(data.split("/"))), "path")
+
+      let obj = {..._obj.obj};
+      obj.url = data;
+      obj.layer = _obj.objLayer;
+      return obj
+    })
+  }else {
+    return []
+  }
+
+}
 
 export default function Index(pro) {
   // Declare a new state variable, which we'll call "count"
@@ -95,36 +114,29 @@ export default function Index(pro) {
         _state.splice((_state.findIndex(item => item === action.data)) + 1, 1);
         break;
     }
-
     if (diffObj(state, _state)) {
-      let urlArr = _state.map((data, i) => {
-        let _obj = treeSearchByArr(props.data, stringArrAddValue(arrDelNull(data.split("/"))), "path")
-
-        let obj = {..._obj.obj};
-        obj.url = data;
-        obj.layer = _obj.objLayer;
-        return obj
-      })
+      let urlArr = setRouterActDataObjFun(_state,props.data)
       setRouterActDataObj(urlArr)
       return _state
     }
-
     return state
   }, ["/"]);
 
 
+
+
   useEffect(() => {
     // Update the document title using the browser API
-
+    setRouterActDataObj(setRouterActDataObjFun(routerActData,props.data))
     return () => {
     }
-  }, []);
+  }, [props.data]);
   useEffect(() => {
     // Update the document title using the browser API
 
-    if(history.action === "POP" && routerActData.length > 1){
+    if (history.action === "POP" && routerActData.length > 1) {
       dispatch({data: location.pathname, type: "MINUS"})
-    }else {
+    } else {
       dispatch({data: location.pathname, type: "ADD"})
     }
     return () => {
