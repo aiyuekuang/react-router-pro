@@ -15,6 +15,9 @@ let prop = {
   isNoRouter: "isShow",
   isRouterFun: (bool) => {
     return !bool;
+  },
+  onChange:(routerActData)=>{
+
   }
 }
 
@@ -34,7 +37,7 @@ export let treeSearchByArr = (tree, arr, label = 'id', children = 'children') =>
       // if(i[label].indexOf("?") !== -1){
       //   str = str.substring(0,i[label].indexOf("?"))
       // }
-      if (i[label] === arr[layer] || i[label].includes('/:')) {
+      if (i[label] === arr[layer] || i[label] && i[label].includes('/:')) {
         objLayer.push(i)
         if (arr[layer + 1] && i[children] && i[children].length > 0) {
           loop(i[children], layer + 1);
@@ -131,7 +134,7 @@ export default function Index(pro) {
 
   useEffect(() => {
     // Update the document title using the browser API
-
+    onChange(routerActDataObj)
     return () => {
     }
   }, [routerActDataObj]);

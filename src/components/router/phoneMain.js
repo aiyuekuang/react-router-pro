@@ -75,7 +75,7 @@ export let isCurrentRoute = (path, currentPath) => {
 let setRouterActDataObjFun=(_state,routerData)=>{
   if(routerData){
    return _state.map((data, i) => {
-      let _obj = treeSearchByArr(routerData, stringArrAddValue(arrDelNull(data.split("/"))), "path")
+      let _obj = treeSearchByArr(routerData,stringArrAddValue(arrDelNull(data.split("/"))), "path")
 
       let obj = {..._obj.obj};
       obj.url = data;
