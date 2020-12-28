@@ -145,7 +145,7 @@ export default function Index(pro) {
 
   useEffect(() => {
     // Update the document title using the browser API
-
+    onChange(routerActDataObj)
     return () => {
     }
   }, [routerActDataObj]);
