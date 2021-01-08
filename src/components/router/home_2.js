@@ -133,6 +133,7 @@ export default class Index extends Component {
                 routerAddDispatch={(data) => this.dispatch({data: data, type: "ADD"})}
                 routerMinusDispatch={(data) => this.dispatch({data: data, type: "MINUS"})}
                 routerActData={routerActDataObj}
+                routerData={data}
               />
             </div>
           );
