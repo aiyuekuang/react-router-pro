@@ -1,6 +1,6 @@
 {
   "name": "react-router-pro",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "description": "react-router-pro",
   "main": "./lib/index.js",
   "scripts": {
