@@ -197,6 +197,7 @@ export default function Index(pro) {
               routerAddDispatch={(data) => dispatch({data: data, type: "ADD"})}
               routerMinusDispatch={(data) => dispatch({data: data, type: "MINUS"})}
               routerActData={routerActDataObj}
+              routerData={data}
             />
           </div>
         );
