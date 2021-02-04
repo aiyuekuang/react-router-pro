@@ -14,6 +14,7 @@ class Path(object):
 arr = [
 Path('D:/oppo_pro/esa-admin/node_modules/react-router-pro'),
 Path('D:/oppo_pro/ddp-h5/node_modules/react-router-pro'),
+Path('D:/oppo_pro/ddp_online/node_modules/react-router-pro'),
 ]
 
 
