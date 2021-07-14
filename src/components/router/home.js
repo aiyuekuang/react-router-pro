@@ -1,9 +1,8 @@
-import {useLocation, Route} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import React, {Fragment, useEffect, useReducer, useState} from 'react';
 import NotFounds from "../public/404"
 import NoAuths from "../public/no_auth"
-import {arrDelNull, cloneop, diffObj, isArrayop, stringArrAddValue} from "esn";
-import {Switch} from "react-router";
+import {arrDelNull, cloneop, diffObj, isArrayop, strHasKey, stringArrAddValue} from "esn";
 
 let prop = {
     data: [],
@@ -38,13 +37,15 @@ export let treeSearchByArr = (tree, arr, label = 'id', children = 'children') =>
             // if(i[label].indexOf("?") !== -1){
             //   str = str.substring(0,i[label].indexOf("?"))
             // }
-            if (i[label] === arr[layer] || i[label] && i[label].includes('/:')) {
+            if (i[label] === arr[layer]) {
                 objLayer.push(i)
                 if (arr[layer + 1] && i[children] && i[children].length > 0) {
                     loop(i[children], layer + 1);
                 } else if (layer === (arr.length - 1)) {
                     obj = i;
                 }
+            }else if(strHasKey(i[label],"/:") && (i[label].split("/:"))[0] === arr[layer]){
+                obj = i;
             }
         }
     };
@@ -62,12 +63,10 @@ export let isCurrentRoute = (path, currentPath) => {
             return data + next
         }) : ""
 
-
         if (_currentPath === path.split('/:')[0]) {
             isRoute = true;
         }
     } else {
-
         if (currentPath === path) {
             isRoute = true;
         }
@@ -218,13 +217,16 @@ export default function Index(pro) {
 
     if (HomeComp) {
         HomeCompWarp = (
-            <HomeComp routerAddDispatch={(data) => dispatch({data, type: "ADD"})}
-                      routerMinusDispatch={(data) => dispatch({data, type: "MINUS"})} routerActData={routerActDataObj}>
+            <HomeComp
+                routerAddDispatch={(data) => dispatch({data, type: "ADD"})}
+                routerMinusDispatch={(data) => dispatch({data, type: "MINUS"})}
+                routerActData={routerActDataObj}>
                 {renderRouterDom(routerActData, data)}
                 {/*<Route exact={true} render={() => <NotFound/>}/>*/}
             </HomeComp>
         )
     }
+
 
     return (
         <Fragment>
