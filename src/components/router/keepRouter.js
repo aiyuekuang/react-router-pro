@@ -24,8 +24,8 @@ let prop = {
   },
   onChange:()=>{},
   //用于生成路由时，判断数据是不是路由数据
-  isRouter:(data)=>{
-
+  isRouter:(data=true)=>{
+    return data
   }
 }
 let Comp = () => (<span/>);

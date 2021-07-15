@@ -13,8 +13,8 @@ let prop = {
     HomeComp: null,
     warpRoute: null,
     isNoRouter: "isShow",
-    isRouterFun: (bool) => {
-        return !bool;
+    isRouter:(data=true)=>{
+        return data;
     },
     onChange: (routerActData) => {
 
@@ -44,7 +44,7 @@ export let treeSearchByArr = (tree, arr, label = 'id', children = 'children') =>
                 } else if (layer === (arr.length - 1)) {
                     obj = i;
                 }
-            }else if(strHasKey(i[label],"/:") && (i[label].split("/:"))[0] === arr[layer]){
+            } else if (strHasKey(i[label], "/:") && (i[label].split("/:"))[0] === arr[layer]) {
                 obj = i;
             }
         }
@@ -82,7 +82,7 @@ export default function Index(pro) {
     }
     let location = useLocation();
 
-    const {data, NotFound, compEnum, NoAuth, isLogin, HomeComp, warpRoute, isNoRouter, isRouterFun, onChange, isRouter} = props;
+    const {data, NotFound, compEnum, NoAuth, isLogin, HomeComp, warpRoute, isNoRouter, onChange, isRouter} = props;
     const [routerActDataObj, setRouterActDataObj] = useState([])
 
     const [routerActData, dispatch] = useReducer((state, action) => {
@@ -104,7 +104,6 @@ export default function Index(pro) {
         if (diffObj(state, _state)) {
             let urlArr = _state.map((data, i) => {
                 let _obj = treeSearchByArr(props.data, stringArrAddValue(arrDelNull(data.split("/"))), "path")
-
                 let obj = {..._obj.obj};
                 obj.url = data;
                 obj.layer = _obj.objLayer;
@@ -169,6 +168,7 @@ export default function Index(pro) {
 
             let isRoute = isCurrentRoute(`${parentPath}${data.path}`, path);
 
+
             if (isRoute) {
                 let Comp = data.component && typeof data.component === 'string'
                     ? compEnum.get(data.component).component : data.component
@@ -226,7 +226,6 @@ export default function Index(pro) {
             </HomeComp>
         )
     }
-
 
     return (
         <Fragment>
