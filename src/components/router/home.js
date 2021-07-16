@@ -2,7 +2,7 @@ import {useLocation} from 'react-router-dom';
 import React, {Fragment, useEffect, useReducer, useState} from 'react';
 import NotFounds from "../public/404"
 import NoAuths from "../public/no_auth"
-import {arrDelNull, cloneop, diffObj, isArrayop, strHasKey, stringArrAddValue} from "esn";
+import {arrDelNull, arrLast, cloneop, diffObj, isArrayop, strHasKey, stringArrAddValue} from "esn";
 
 let prop = {
     data: [],
@@ -172,6 +172,11 @@ export default function Index(pro) {
             if (isRoute) {
                 let Comp = data.component && typeof data.component === 'string'
                     ? compEnum.get(data.component).component : data.component
+                let params = {}
+
+                if(strHasKey(data.path,"/:")){
+                    params[arrLast(data.path.split("/:"))] = arrLast(location.pathname.split("/"))
+                }
 
                 return (
                     <div
@@ -187,6 +192,9 @@ export default function Index(pro) {
                             routerMinusDispatch={(data) => dispatch({data: data, type: "MINUS"})}
                             routerActData={routerActDataObj}
                             routerData={data}
+                            match={{
+                                params
+                            }}
                         />
                     </div>
                 );
